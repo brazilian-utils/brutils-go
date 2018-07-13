@@ -1,10 +1,14 @@
-package cpf
+package cpf_test
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/brazilian-utils/brutils-go/cpf"
+)
 
 var tables = []struct {
-	input  string
-	output bool
+	input    string
+	expected bool
 }{
 	{"00000000000", false},
 	{"11111111111", false},
@@ -22,8 +26,8 @@ var tables = []struct {
 
 func TestValidate(t *testing.T) {
 	for _, table := range tables {
-		if res := Validate(table.input); res != table.output {
-			t.Errorf("Expected %v for %v, received %v", table.output, table.input, res)
+		if res := cpf.IsValid(table.input); res != table.expected {
+			t.Errorf("Failing for %v \t Expected: %v | Received: %v", table.input, table.expected, res)
 		}
 	}
 }

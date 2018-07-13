@@ -1,16 +1,60 @@
 package cpf
 
 import (
-	"github.com/brazilian-utils/golang/helpers"
+	"strconv"
+	"strings"
+
+	"github.com/brazilian-utils/brutils-go/helpers"
 )
 
-func isValidCpf(cpf string) bool {
-	return false
+var blacklist = []string{
+	"00000000000",
+	"11111111111",
+	"22222222222",
+	"33333333333",
+	"44444444444",
+	"55555555555",
+	"66666666666",
+	"77777777777",
+	"88888888888",
+	"99999999999",
 }
 
-// Validate if a given string
-// is a valid CPF
-func Validate(cpf string) bool {
-	cpf = helpers.OnlyNumbers(cpf)
-	return isValidCpf(cpf)
+var verifierIndexes = []int{9, 10}
+
+// IsValid validates if a given CPF is valid
+func IsValid(cpf string) bool {
+	cpfNumbers := helpers.OnlyNumbers(cpf)
+
+	return isValidChecksum(cpfNumbers) && !isBlacklisted(cpf)
+}
+
+func isValidChecksum(cpf string) bool {
+	validity := true
+
+	for _, verifier := range verifierIndexes {
+		digits := strings.Split(cpf[:verifier], "")
+		weight := len(digits) + 1
+
+		var mod int
+		for _, digitStr := range digits {
+			digit, _ := strconv.Atoi(digitStr)
+			mod += digit * weight
+			weight--
+		}
+
+		var res int
+		if mod = mod % 11; mod >= 2 {
+			res = 11 - mod
+		}
+
+		valid, _ := strconv.Atoi(string(cpf[verifier]))
+		validity = validity && (valid == res)
+	}
+
+	return validity
+}
+
+func isBlacklisted(cpf string) bool {
+	return helpers.Contains(blacklist, cpf)
 }
