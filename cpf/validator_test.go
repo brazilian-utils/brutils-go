@@ -10,6 +10,7 @@ var tables = []struct {
 	input    string
 	expected bool
 }{
+	{"000111", false},
 	{"00000000000", false},
 	{"11111111111", false},
 	{"22222222222", false},
@@ -20,6 +21,7 @@ var tables = []struct {
 	{"77777777777", false},
 	{"88888888888", false},
 	{"99999999999", false},
+	{"403644788290", false},
 	{"40364478829", true},
 	{"962.718.458-60", true},
 }
