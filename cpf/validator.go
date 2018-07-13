@@ -33,26 +33,30 @@ func isValidChecksum(cpf string) bool {
 	validity := true
 
 	for _, verifier := range verifierIndexes {
-		digits := strings.Split(cpf[:verifier], "")
-		weight := len(digits) + 1
-
-		var mod int
-		for _, digitStr := range digits {
-			digit, _ := strconv.Atoi(digitStr)
-			mod += digit * weight
-			weight--
-		}
-
-		var res int
-		if mod = mod % 11; mod >= 2 {
-			res = 11 - mod
-		}
+		mod := computeMod(strings.Split(cpf[:verifier], ""))
 
 		valid, _ := strconv.Atoi(string(cpf[verifier]))
-		validity = validity && (valid == res)
+		validity = validity && (valid == mod)
 	}
 
 	return validity
+}
+
+func computeMod(digits []string) (res int) {
+	weight := len(digits) + 1
+
+	var mod int
+	for _, digitStr := range digits {
+		digit, _ := strconv.Atoi(digitStr)
+		mod += digit * weight
+		weight--
+	}
+
+	if mod = mod % 11; mod >= 2 {
+		res = 11 - mod
+	}
+
+	return
 }
 
 func isBlacklisted(cpf string) bool {
