@@ -1,4 +1,6 @@
-# TODO
+# Brazilian Utils for Go
+
+[![CircleCI](https://circleci.com/gh/brazilian-utils/brutils-go/tree/master.svg?style=svg)](https://circleci.com/gh/brazilian-utils/brutils-go/tree/master)
 
 ## Installation
 
