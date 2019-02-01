@@ -1,12 +1,9 @@
 package helpers
 
+import "strings"
+
 // Contains verifies if a slice of string contains the given string
 func Contains(h []string, n string) bool {
-	for _, s := range h {
-		if s == n {
-			return true
-		}
-	}
-
-	return false
+	line := strings.Join(h, "")
+	return strings.Contains(line, n)
 }
