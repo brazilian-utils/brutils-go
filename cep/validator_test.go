@@ -31,8 +31,8 @@ var testCases = []struct {
 
 func TestValidCEP(t *testing.T) {
 	for _, tc := range testCases {
-		if IsValid(tc.cep) != tc.expected {
-			t.Errorf("%s did not pass test, expected: %t", tc.message, tc.expected)
+		if result := IsValid(tc.cep); result != tc.expected {
+			t.Errorf("Failing for %s \t Expected: %t | Received: %t", tc.message, tc.expected, result)
 		}
 	}
 }
