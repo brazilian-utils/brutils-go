@@ -20,11 +20,12 @@ var blacklist = []string{
 	"99999999999999",
 }
 
-// Position of verification digits
+// verifierIndexes is the position of verification digits
 var verifierIndexes = []int{12, 13}
 
-// Every CNPJ has exactly 14 characters
-const cnpjSize = 14
+// CNPJSize represents a valid size for CNPJ
+// ignoring special characters
+const CNPJSize = 14
 
 // IsValid validates if a given CNPJ is valid
 func IsValid(cnpj string) bool {
@@ -33,7 +34,7 @@ func IsValid(cnpj string) bool {
 	return hasValidLength(digits) && !isBlacklisted(cnpj) && isValidChecksum(digits)
 }
 
-// Perform checksum validation
+// isValidChecksum perform checksum validation
 func isValidChecksum(cnpj string) bool {
 	validity := true
 
@@ -68,9 +69,10 @@ func computeMod(digits []string, verifier int) (res int) {
 	return
 }
 
-// Validates the string length
+// hasValidLength verify if the given CNPJ
+// has valid length
 func hasValidLength(cnpj string) bool {
-	return len(cnpj) == cnpjSize
+	return len(cnpj) == CNPJSize
 }
 
 func isBlacklisted(cnpj string) bool {

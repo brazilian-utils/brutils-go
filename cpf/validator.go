@@ -7,7 +7,7 @@ import (
 	"github.com/brazilian-utils/brutils-go/helpers"
 )
 
-// Valid CPFs but blacklisted they are reserved
+// blacklist is a list of invalid (blacklisted) values for CPF
 var blacklist = []string{
 	"00000000000",
 	"11111111111",
@@ -21,11 +21,12 @@ var blacklist = []string{
 	"99999999999",
 }
 
-// Position of verification digits
+// verifierIndexes are the position of verification digits
 var verifierIndexes = []int{9, 10}
 
-// Every CPF has exactly 11 characters
-const cpfSize = 11
+// CPFSize represents the valid size
+// for a CPF ignoring the special characters
+const CPFSize = 11
 
 // IsValid validates if a given CPF is valid
 func IsValid(cpf string) bool {
@@ -34,7 +35,7 @@ func IsValid(cpf string) bool {
 	return hasValidLength(cpfNumbers) && !isBlacklisted(cpf) && isValidChecksum(cpfNumbers)
 }
 
-// Perform checksum validation
+// isValidChecksum performs checksum validation
 func isValidChecksum(cpf string) bool {
 	validity := true
 
@@ -66,9 +67,9 @@ func computeMod(digits []string) (res int) {
 	return
 }
 
-// Validates the string length
+// hasValidLength verify if the given CPF has valid length
 func hasValidLength(cpf string) bool {
-	return len(cpf) == cpfSize
+	return len(cpf) == CPFSize
 }
 
 func isBlacklisted(cpf string) bool {
