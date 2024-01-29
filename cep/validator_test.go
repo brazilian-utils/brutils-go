@@ -26,3 +26,12 @@ func TestValidate(t *testing.T) {
 		}
 	}
 }
+
+func TestGenerate(t *testing.T) {
+	for i := 0; i < 10; i++ {
+		res := cep.Generate()
+		if !cep.IsValid(res) {
+			t.Errorf("An invalid cep was generated: %s", res)
+		}
+	}
+}
